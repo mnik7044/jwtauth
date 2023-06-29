@@ -1,0 +1,15 @@
+JWT stands for json web tokens // Also known as stateless
+
+It is one way to implement authentication, it is very flexible too.
+
+Advantages: 
+
+Memory  less as because all the data is stored on user side as tokens
+Serverless architecture support
+Currently used
+
+Disadvantage:
+
+Less secure in comparison to session 
+Also the tokens can be used by hackers
+Usders pe access utna nahi hota
