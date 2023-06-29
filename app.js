@@ -1,10 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const authroute = require('./routes/authroute') // Requiring/Importing the routes
+
+
 
 const app = express();
 
-// Static middleware this where we can connect our styatic files like css to the browser
-app.use(express.static('public'));
+
+//Middlewares
+app.use(express.static('public')); // Static middleware this where we can connect our styatic files like css to the browser
+app.use(express.json()) // Takes json data and parses it to a javascript object(attaches it to request handler of that route) so that we can use it in code
+
 
 // view engine
 app.set('view engine', 'ejs');
@@ -18,4 +24,5 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCr
 // routes
 app.get('/', (req, res) => res.render('home'));
 app.get('/smoothies', (req, res) => res.render('smoothies'));
+app.use(authroute) // Placing all of the routes 
 
