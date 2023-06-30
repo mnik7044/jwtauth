@@ -1,6 +1,30 @@
 <%- include('partials/header'); -%>
 
-<h1> Sign Up</h1>
+<form>
+    <h2>Sign Up</h2>
+    <label for="email">Email</label>
+    <input type="text" placeholder="Enter your email" name="email">
+    <div class="email error"></div>
+    <label for="password">Password</label>
+    <input type="password" placeholder="Enter your password" name="password">
+    <div class="password error"></div>
+    <button>Sign Up</button>
+</form>
+
+<script>
+ const form = document.querySelector('form')
+ form.addEventListener('submit', (e)=>{
+    e.preventDefault()  //Prevents the default action from happening which is refreshing of page
+
+    //get values
+    const email = form.email.value
+    const password = form.password.value
+    console.log(email, password)
+   
+ })
+
+</script>
+
 
 
 <%- include('partials/footer'); -%>

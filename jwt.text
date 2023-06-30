@@ -13,3 +13,9 @@ Disadvantage:
 Less secure in comparison to session 
 Also the tokens can be used by hackers
 Usders pe access utna nahi hota
+
+
+Mongoose Hooks
+
+They are certain events that happen after some certaon part of the databsse
+example deleting database se koi events fire hoga, creating se kuch fire hoga nd so on
