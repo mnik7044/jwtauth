@@ -19,3 +19,39 @@ Mongoose Hooks
 
 They are certain events that happen after some certaon part of the databsse
 example deleting database se koi events fire hoga, creating se kuch fire hoga nd so on
+
+
+Cookies
+On the server we can access this Cookies
+ csrf(cross site request forgery) mitigation property
+
+Basic and easy way to work with Cookies
+
+
+app.get('/set-cookies', (req,res) => {
+  res.setHeader('Set-Cookie', 'newUser=true') // Setting up the cookies, we can acces the cookie using document.cookies(In the browser)
+  res.send('You got the cookies')
+
+
+})
+
+
+We have a much easier way to work with cookies which is by using an external package called cookie-parser
+
+After requiring the package and usinh it as a middlware using this code 
+
+app.use(cookieParser())
+
+We can use it by just using the code
+
+res.cookie('newUser', false) // Here first parameter is the identifier and the second parameter is the value of the cookie'
+
+
+Here comes the third argument, which is an object where we can specify different properties
+
+ExAMPLE:   res.cookie('isEmployee', true, {maxAge: 1000*60*60*24}) 
+
+Here maxAge is in milliseconds.
+Rememeber defalt wala session hota so this is overwriting it
+
+As we are using the cookie package we can access/read the cookies using req.cookie anywhere.

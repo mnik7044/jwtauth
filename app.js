@@ -1,3 +1,4 @@
+const cookieParser = require('cookie-parser') // This is kind of a middle ware
 const express = require('express');
 const mongoose = require('mongoose');
 const authroute = require('./routes/authroute') // Requiring/Importing the routes
@@ -10,7 +11,7 @@ const app = express();
 //Middlewares
 app.use(express.static('public')); // Static middleware this where we can connect our styatic files like css to the browser
 app.use(express.json()) // Takes json data and parses it to a javascript object(attaches it to request handler of that route) so that we can use it in code
-
+app.use(cookieParser())
 
 // view engine
 app.set('view engine', 'ejs');
@@ -18,7 +19,7 @@ app.set('view engine', 'ejs');
 // database connection
 const dbURI = 'mongodb+srv://test:test1234@cluster0.0elqhvr.mongodb.net/jwt-auth';
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
-  .then((result) => app.listen(3002))
+  .then((result) => console.log('db connected'))
   .catch((err) => console.log(err));
 
 // routes
@@ -26,3 +27,26 @@ app.get('/', (req, res) => res.render('home'));
 app.get('/smoothies', (req, res) => res.render('smoothies'));
 app.use(authroute) // Placing all of the routes 
 
+//cookies
+app.get('/set-cookies', (req,res) => {
+  // res.setHeader('Set-Cookie', 'newUser=true') // Setting up the cookies, we can acces the cookie using document.cookies(In the browser)
+  
+  res.cookie('newUser', false) // If the cookie currently exists, then it will update it if not then will create it
+  
+  res.cookie('isEmployee', true, {maxAge: 1000*60*60*24, secure:true, httpOnly: true}) 
+
+  res.send('You got the cookies')
+
+
+}) 
+
+app.get('/read-cookies', (req,res)=>{
+
+ const cookies = req.cookies
+ console.log(cookies.newUser)
+
+ res.json(cookies)
+
+})
+
+app.listen(3002)
