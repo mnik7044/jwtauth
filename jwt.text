@@ -53,5 +53,42 @@ ExAMPLE:   res.cookie('isEmployee', true, {maxAge: 1000*60*60*24})
 
 Here maxAge is in milliseconds.
 Rememeber defalt wala session hota so this is overwriting it
+cookie overview
+//cookies
+app.get('/set-cookies', (req,res) => {
+  // res.setHeader('Set-Cookie', 'newUser=true') // Setting up the cookies, we can acces the cookie using document.cookies(In the browser)
+  
+  res.cookie('newUser', false) // If the cookie currently exists, then it will update it if not then will create it
+  
+  res.cookie('isEmployee', true, {maxAge: 1000*60*60*24, secure:true, httpOnly: true}) 
+
+  res.send('You got the cookies')
+
+
+}) 
+
+app.get('/read-cookies', (req,res)=>{
+
+ const cookies = req.cookies
+ console.log(cookies.newUser)
+
+ res.json(cookies)
+
+})
 
 As we are using the cookie package we can access/read the cookies using req.cookie anywhere.
+
+SignUp Method
+
+After the user gives the email & password, we need to do 2 things
+1. First of all we need to hash their password
+a. We hashed the password using the presaved hook in mongoose and we r gonna save it in the database
+2. Instantly log the user into the website(create a jwt for them)
+we need to log in the user once the document is created in the database, to do that we can create a jwt attach it to the folder and send it to the browser 
+and for as long as the cookie remains untouched the user remains logged in.
+
+Different psrt of jwt
+1- Header - It can be considered as the meta data for the token.
+2- Payload - Data encoded into jwt. user id to identify the user whhen this is decoded we know which user is logged in
+3- Signature-
+This is created in the server and sent to the browser and stored inside the cookies 
