@@ -13,9 +13,17 @@
 
 <script>
  const form = document.querySelector('form')
+ const emailError = document.querySelector('.email.error')
+ const passwordError = document.querySelector('.password.error')
+
  form.addEventListener('submit', async (e)=>{
     e.preventDefault()  //Prevents the default action from happening which is refreshing of page
 
+   //Reset errors every time we click the signup button
+   emailError.textContent = ''
+   passwordError.textContent = '' // Just changing them to empty string everytime we click the signup button
+
+      
     //get values
     const email = form.email.value
     const password = form.password.value
@@ -27,6 +35,20 @@
         body: JSON.stringify({email,  password}),
         headers: {'Content-Type' : 'application/json' }
      })
+
+     const data = await res.json()
+     console.log(data)
+     if(data.errors)
+     {
+        emailError.textContent = data.errors.email
+        passwordError.textContent = data.errors.password
+
+     }
+    if(data.user)
+    {
+        location.assign('/')
+    } // Just redericting to the home page if the user is signed up
+     
     }
     catch(err) {
         console.log(err)

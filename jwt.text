@@ -92,3 +92,8 @@ Different psrt of jwt
 2- Payload - Data encoded into jwt. user id to identify the user whhen this is decoded we know which user is logged in
 3- Signature-
 This is created in the server and sent to the browser and stored inside the cookies 
+
+What we are doing till now till the signup process?
+Once the user credential is send to the server by clicking the signup button we handle it using post request, we hash the password first of all and save the user to the database
+After that is done we create a json web token put in a cookie and send it to the browser
+Ultimately this cookies, jwts are gonna get send to the servers for every request we make 
