@@ -13,16 +13,50 @@
 
 <script>
  const form = document.querySelector('form')
- form.addEventListener('submit', (e)=>{
-    e.preventDefault()  //Prevents the default action from happening which is refreshing of page
+ const emailError = document.querySelector('.email.error')
+ const passwordError = document.querySelector('.password.error')
 
-    //get values
-    const email = form.email.value
-    const password = form.password.value
-    console.log(email, password)
+
+
+ form.addEventListener('submit', async (e)=>{
+ e.preventDefault()  //Prevents the default action from happening which is refreshing of page
+
+//Reset errors every time we click the signup button
+emailError.textContent = ''
+passwordError.textContent = '' // Just changing them to empty string everytime we click the signup button
+
    
- })
+ //get values
+ const email = form.email.value
+ const password = form.password.value
+ 
 
+ try{
+  const res = await fetch('/login', {
+     method: 'POST',
+     body: JSON.stringify({email,  password}),
+     headers: {'Content-Type' : 'application/json' }
+  })
+
+  const data = await res.json()
+  console.log(data)
+  if(data.errors)
+  {
+     emailError.textContent = data.errors.email
+     passwordError.textContent = data.errors.password
+
+  }
+ if(data.user)
+ {
+     location.assign('/')
+ } // Just redirecting to the home page if the user is signed up
+  
+ }
+ catch(err) {
+     console.log(err)
+ }
+
+})
 </script>
 
 

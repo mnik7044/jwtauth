@@ -39,6 +39,21 @@ userSchema.pre('save', async function(next){
     next()
 })
 
+// Static method to login users
+
+userSchema.statics.login = async function(email,password){
+    const user = await this.findOne({email}) // We are making sure that the email exists so we are checking this
+    if(user){
+       const auth = await bcrypt.compare(password, user.password)// We are comparing the password the user is signing in with thrte hashed password stored in our db
+    if(auth)
+    {
+        return user
+    }
+    throw Error('Incorrect Password')
+    }
+    throw Error('Incorrect Email')
+}
+
 // As we are using mongoose hook pre this will directly save the hashed password in the database and not the plain text password.
 
 const User = mongoose.model('user', userSchema) // Created a model based on the above schema

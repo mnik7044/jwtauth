@@ -97,3 +97,14 @@ What we are doing till now till the signup process?
 Once the user credential is send to the server by clicking the signup button we handle it using post request, we hash the password first of all and save the user to the database
 After that is done we create a json web token put in a cookie and send it to the browser
 Ultimately this cookies, jwts are gonna get send to the servers for every request we make 
+
+
+// Logging users in
+
+How do we do that?
+
+First of all we will take the credentials and will look for that user in the database.
+Once we have got that user, we have to compare the hashed password, first of all we take the password, hash it and then will match it to the hashed password in our database in respect to that user, for the user with that email. If they match it means the password is correct and we can log them in create jwt for them and send it back to the browser in cookies. If it dont match we will send them an error.
+
+We need to check whether the mail is in db or not then we need to check whether the password is correct or n
+ot
