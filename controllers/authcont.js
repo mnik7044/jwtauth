@@ -7,6 +7,18 @@ const jwt = require('jsonwebtoken')
 const handleErrors = (err) =>{
     console.log(err.message, err.code)
     let errors = {email: '' , password: ''} // If there is a email error we will update the first property, if password second prop
+    
+    //Incorrect email
+    if(err.message === 'Incorrect Email'){
+        errors.email = 'that email is not registered'
+    }
+
+    //Incorrect Password
+    if(err.message === 'Incorrect Password'){
+        errors.password = 'that password is wrong'
+    }
+    
+    
     //duplicate error code
      if(err.code === 11000){
      errors.email = "This email is already registered"  // We are taking ity from console after destructuring
@@ -64,7 +76,8 @@ module.exports.login_post = async (req,res) =>{
       res.status(200).json({user: user._id})
     }
     catch(err){
-    res.status(400).json({})
+    const errors = handleErrors(err)
+    res.status(400).json({ errors})
     }
     
 }
