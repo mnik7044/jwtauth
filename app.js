@@ -2,7 +2,7 @@ const cookieParser = require('cookie-parser') // This is kind of a middle ware
 const express = require('express');
 const mongoose = require('mongoose');
 const authroute = require('./routes/authroute') // Requiring/Importing the routes
-
+const { requireAuth } = require('./middleware/authMiddleware')
 
 
 const app = express();
@@ -24,7 +24,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCr
 
 // routes
 app.get('/', (req, res) => res.render('home'));
-app.get('/smoothies', (req, res) => res.render('smoothies'));
+app.get('/smoothies', requireAuth, (req, res) => res.render('smoothies'));
 app.use(authroute) // Placing all of the routes 
 
 
